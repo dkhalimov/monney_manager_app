@@ -1,8 +1,12 @@
-part of 'add_date.dart';
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
+// part of 'add_date.dart';
+import 'package:hive/hive.dart';
+import 'package:finance_app/models/add_date.dart';
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
+
 
 class AdddataAdapter extends TypeAdapter<Add_data> {
   @override
