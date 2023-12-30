@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+part 'add_date.g.dart';
 
-// part 'add_date.g.dart';
 @HiveType(typeId: 1)
 class Add_data extends HiveObject {
   @HiveField(0)

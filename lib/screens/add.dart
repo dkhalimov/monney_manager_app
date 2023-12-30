@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class Add_Screen extends StatefulWidget {
-  const Add_Screen({super.key});
+  const Add_Screen({Key? key}) : super(key: key);
 
   @override
   State<Add_Screen> createState() => _Add_ScreenState();
@@ -41,8 +41,9 @@ class _Add_ScreenState extends State<Add_Screen> {
   }
 
   Widget build(BuildContext context) {
+    var shade1002 = Colors.grey.shade100;
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: shade1002,
       body: SafeArea(
         child: Stack(
           alignment: AlignmentDirectional.center,

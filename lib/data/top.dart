@@ -1,18 +1,36 @@
 import 'package:finance_app/data/1.dart';
 
-List<money> geter_top() {
-  money snap_food = money();
-  snap_food.time = 'jan 30,2024';
-  snap_food.image = 'mac.jpg';
-  snap_food.buy = true;
-  snap_food.fee = '- \$ 100';
-  snap_food.name = 'kfc';
-  money snap = money();
-  snap.buy = true;
-  snap.fee = '- \$60';
-  snap.image = 'cre.png';
-  snap.name = 'Transfer';
-  snap.time = 'today';
+class Money {
+  String time;
+  String image;
+  bool buy;
+  String fee;
+  String name;
 
-  return [snap_food];
+  Money(
+      {required this.time,
+      required this.image,
+      required this.buy,
+      required this.fee,
+      required this.name});
+}
+
+List<Money> getTopItems() {
+  Money snapFood = Money(
+    time: 'jan 30,2024',
+    image: 'mac.jpg',
+    buy: true,
+    fee: '- \$ 100',
+    name: 'kfc',
+  );
+
+  Money snap = Money(
+    time: 'today',
+    image: 'cre.png',
+    buy: true,
+    fee: '- \$60',
+    name: 'Transfer',
+  );
+
+  return [snapFood];
 }

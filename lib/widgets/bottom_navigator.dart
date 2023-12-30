@@ -12,12 +12,13 @@ class Bottom extends StatefulWidget {
 }
 
 class _BottomState extends State<Bottom> {
-  int index_color = 0;
-  List Screen = [Home(), Statistics(), Home(), Statistics()];
+  int selectedIndex = 0;
+  List<Widget> screens = [Home(), Statistics(), Home(), Statistics()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Screen[index_color],
+      body: screens[selectedIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)
@@ -34,58 +35,29 @@ class _BottomState extends State<Bottom> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    index_color = 0;
-                  });
-                },
-                child: Icon(
-                  Icons.home,
-                  size: 30,
-                  color: index_color == 0 ? Color(0xff368983) : Colors.grey,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    index_color = 1;
-                  });
-                },
-                child: Icon(
-                  Icons.bar_chart_outlined,
-                  size: 30,
-                  color: index_color == 1 ? Color(0xff368983) : Colors.grey,
-                ),
-              ),
+              buildNavBarItem(Icons.home, 0),
+              buildNavBarItem(Icons.bar_chart_outlined, 1),
               SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    index_color = 2;
-                  });
-                },
-                child: Icon(
-                  Icons.account_balance_wallet_outlined,
-                  size: 30,
-                  color: index_color == 2 ? Color(0xff368983) : Colors.grey,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    index_color = 3;
-                  });
-                },
-                child: Icon(
-                  Icons.person_outlined,
-                  size: 30,
-                  color: index_color == 3 ? Color(0xff368983) : Colors.grey,
-                ),
-              ),
+              buildNavBarItem(Icons.account_balance_wallet_outlined, 2),
+              buildNavBarItem(Icons.person_outlined, 3),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildNavBarItem(IconData icon, int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedIndex = index;
+        });
+      },
+      child: Icon(
+        icon,
+        size: 30,
+        color: selectedIndex == index ? Color(0xff368983) : Colors.grey,
       ),
     );
   }

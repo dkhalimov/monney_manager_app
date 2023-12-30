@@ -4,17 +4,24 @@ import 'package:finance_app/data/utlity.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Chart extends StatefulWidget {
-  int indexx;
+  final int indexx; 
   Chart({Key? key, required this.indexx}) : super(key: key);
 
   @override
-  State<Chart> createState() => _ChartState();
+  State<Chart> createState() => _ChartState(indexx: indexx);
 }
 
 class _ChartState extends State<Chart> {
+  late bool b;
+  late bool j;
   List<Add_data>? a;
-  bool b = true;
-  bool j = true;
+
+  _ChartState({required int indexx}) {
+    b = indexx == 0 || indexx == 1;
+    j = indexx != 3;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     switch (widget.indexx) {

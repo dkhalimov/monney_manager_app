@@ -1,9 +1,6 @@
-import 'package:finance_app/models/add_date.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-// import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:hive/hive.dart';
-// import 'package:finance_app/data/list_data.dart';
+import 'package:finance_app/models/add_date.dart';
 import 'package:finance_app/data/utlity.dart';
 
 class Home extends StatefulWidget {
@@ -14,73 +11,71 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  var history;
-  final box = Hive.box<Add_data>('data');
+  late Box<Add_data> box; 
+
   final List<String> day = [
     'Monday',
     "Tuesday",
     "Wednesday",
     "Thursday",
-    'friday',
-    'saturday',
-    'sunday'
+    'Friday',
+    'Saturday',
+    'Sunday'
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    box = Hive.box<Add_data>('data');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: StreamBuilder(
-          stream: box.watch(),
-          builder: (context, AsyncSnapshot<BoxEvent> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              return CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: 340, child: _head()),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Transactions History',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 19,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            'See all',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: SizedBox(height: 340, child: _head()),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Transactions History',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 19,
+                        color: Colors.black,
                       ),
                     ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        history = box.getAt(index);
-                        return getList(history, index);
-                      },
-                      childCount: box.length,
+                    Text(
+                      'See all',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        color: Colors.grey,
+                      ),
                     ),
-                  )
-                ],
-              );
-            }
-          },
+                  ],
+                ),
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  final history = box.getAt(index);
+                  return history != null
+                      ? getList(history, index)
+                      : Container(); 
+                },
+                childCount: box.length,
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -88,11 +83,12 @@ class _HomeState extends State<Home> {
 
   Widget getList(Add_data history, int index) {
     return Dismissible(
-        key: UniqueKey(),
-        onDismissed: (direction) {
-          history.delete();
-        },
-        child: get(index, history));
+      key: UniqueKey(),
+      onDismissed: (direction) {
+        history.delete();
+      },
+      child: get(index, history),
+    );
   }
 
   ListTile get(int index, Add_data history) {
@@ -182,7 +178,7 @@ class _HomeState extends State<Home> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
